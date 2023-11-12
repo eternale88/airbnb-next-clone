@@ -166,15 +166,15 @@ const Modal: React.FC<ModalProps> = ({
                 >
                   {secondaryAction && secondaryActionLabel && (
                     <Button
-                      // disabled={disabled}
+                      disabled={disabled}
                       label={secondaryActionLabel}
                       onClick={handleSecondaryAction}
                       outline
                     />
                   )}
                   <Button
-                    // disabled={disabled}
-                    label='my button'
+                    disabled={disabled}
+                    label='Submit'
                     onClick={handleSubmit}
                   />
                 </div>
