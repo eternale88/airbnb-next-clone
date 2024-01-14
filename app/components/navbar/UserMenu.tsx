@@ -7,9 +7,10 @@ import MenuItem from "./MenuItem";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import { signOut } from "next-auth/react";
+import { SafeUser } from "@/app/types/SafeUser";
 
 interface UserMenuProps {
-  currentUser?: User | null;
+  currentUser?: SafeUser | null;
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
@@ -78,7 +79,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           <AiOutlineMenu />
         </div>
         <div className='hidden md:block'>
-          <Avatar />
+          <Avatar src={currentUser?.image} />
         </div>
       </div>
       {isOpen && (
