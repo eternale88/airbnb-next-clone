@@ -39,11 +39,19 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
     };
   }, []);
 
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+
+    // open rent modal
+  }, []);
+
   return (
     <div className='relative' ref={menuRef}>
       <div className='flex flex-row items-center gap-3'>
         <div
-          onClick={() => {}}
+          onClick={onRent}
           className='
             hidden
             md:block
