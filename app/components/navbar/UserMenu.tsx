@@ -9,6 +9,7 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 import useRentModal from "@/app/hooks/useRentModal";
 import { signOut } from "next-auth/react";
 import { SafeUser } from "@/app/types/SafeUser";
+import UseClickOutside from "@/app/hooks/useClickOutside";
 
 interface UserMenuProps {
   currentUser?: SafeUser | null;
@@ -27,19 +28,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   }, []);
 
   // handle user clicking outside to close menu
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  UseClickOutside({ ref: menuRef, callback: () => setIsOpen(false) });
 
   const onRent = useCallback(() => {
     if (!currentUser) {
