@@ -46,8 +46,9 @@ const RentModal = () => {
     },
   });
 
-  //can't just register the input as with register form, as this category input is a custom input, so we need a workaround, first we watch the input
+  //can't just register the input as with register form, as this category input is a custom input (not really a proper HTML input), so we need a workaround, first we watch the input
   const category = watch("category");
+  const location = watch("location");
 
   //second, setValue wouldn't trigger re render of form, so we need to set a custom setter
   const setCustomValue = (id: string, value: any) => {
@@ -105,7 +106,7 @@ const RentModal = () => {
       </div>
     </div>
   );
-
+  //second step
   if (step === STEPS.LOCATION) {
     bodyContent = (
       <div className='flex flex-col gap-8'>
@@ -114,7 +115,10 @@ const RentModal = () => {
           subtitle='Help guests find you!'
         />
         {/*create hook for loading countries into select component */}
-        <CountrySelect />
+        <CountrySelect
+          onChange={(value) => setCustomValue("location", value)}
+          value={location}
+        />
       </div>
     );
   }
