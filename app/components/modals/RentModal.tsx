@@ -9,6 +9,7 @@ import CategoryInput from "../inputs/CategoryInput";
 import { FieldValues, useForm } from "react-hook-form";
 import CountrySelect from "../inputs/CountrySelect";
 import dynamic from "next/dynamic";
+import Counter from "../inputs/Counter";
 //Must dynamically import map so it will render map locations correctly, leaflet is hacky since it's not made to work with React
 //import Map from "../Map";
 
@@ -131,6 +132,24 @@ const RentModal = () => {
           value={location}
         />
         <Map center={location?.latlng} />
+      </div>
+    );
+  }
+
+  //third step
+  if (step === STEPS.INFO) {
+    bodyContent = (
+      <div className='flex flex-col gap-8'>
+        <Heading
+          title='Share some basics about your place'
+          subtitle='What ammenities do you have?'
+        />
+        <Counter
+          title='Number of guests'
+          subtitle='How many guests'
+          value={0}
+          onChange={() => {}}
+        />
       </div>
     );
   }
