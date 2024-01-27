@@ -8,6 +8,9 @@ import { categories } from "../navbar/Categories";
 import CategoryInput from "../inputs/CategoryInput";
 import { FieldValues, useForm } from "react-hook-form";
 import CountrySelect from "../inputs/CountrySelect";
+import dynamic from "next/dynamic";
+//Must dynamically import map so it will render map locations correctly, leaflet is hacky since it's not made to work with React
+//import Map from "../Map";
 
 // STEPS for rent modal form
 enum STEPS {
@@ -50,6 +53,14 @@ const RentModal = () => {
   const category = watch("category");
   const location = watch("location");
 
+  //dynamically import our leaflet map component, so it will render locations properly on map when user selects a country, it will re-render every time user selects a different country
+  const Map = useMemo(
+    () =>
+      dynamic(() => import("../Map"), {
+        ssr: false,
+      }),
+    [location]
+  );
   //second, setValue wouldn't trigger re render of form, so we need to set a custom setter
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -119,6 +130,7 @@ const RentModal = () => {
           onChange={(value) => setCustomValue("location", value)}
           value={location}
         />
+        <Map center={location?.latlng} />
       </div>
     );
   }
