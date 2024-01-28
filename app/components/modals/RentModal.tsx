@@ -10,6 +10,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import CountrySelect from "../inputs/CountrySelect";
 import dynamic from "next/dynamic";
 import Counter from "../inputs/Counter";
+import ImageUpload from "../inputs/ImageUpload";
 //Must dynamically import map so it will render map locations correctly, leaflet is hacky since it's not made to work with React
 //import Map from "../Map";
 
@@ -53,6 +54,10 @@ const RentModal = () => {
   //can't just register the input as with register form, as this category input is a custom input (not really a proper HTML input), so we need a workaround, first we watch the input
   const category = watch("category");
   const location = watch("location");
+  const guestCount = watch("guestCount");
+  const roomCount = watch("roomCount");
+  const bathroomCount = watch("bathroomCount");
+  const imageSrc = watch("imageSrc");
 
   //dynamically import our leaflet map component, so it will render locations properly on map when user selects a country, it will re-render every time user selects a different country
   const Map = useMemo(
@@ -145,10 +150,40 @@ const RentModal = () => {
           subtitle='What ammenities do you have?'
         />
         <Counter
-          title='Number of guests'
-          subtitle='How many guests'
-          value={0}
-          onChange={() => {}}
+          title='Guests'
+          subtitle='How many guests do you allow?'
+          value={guestCount}
+          onChange={(value) => setCustomValue("guestCount", value)}
+        />
+        <hr />
+        <Counter
+          title='Rooms'
+          subtitle='How many rooms do you have?'
+          value={roomCount}
+          onChange={(value) => setCustomValue("roomCount", value)}
+        />
+        <hr />
+        <Counter
+          title='Bathrooms'
+          subtitle='How many bathrooms do you have?'
+          value={bathroomCount}
+          onChange={(value) => setCustomValue("bathroomCount", value)}
+        />
+      </div>
+    );
+  }
+
+  // fourth step
+  if (step === STEPS.IMAGES) {
+    bodyContent = (
+      <div className='flex flex-col gap-8'>
+        <Heading
+          title='Add a photo of your place'
+          subtitle='Show guests what your place looks like'
+        />
+        <ImageUpload
+          value={imageSrc}
+          onChange={(value) => setCustomValue("imageSrc", value)}
         />
       </div>
     );

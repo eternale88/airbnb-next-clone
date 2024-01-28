@@ -17,6 +17,7 @@
     "leaflet": "^1.9.4",
     "next": "14.0.1",
     "next-auth": "^4.24.5",
+    "next-cloudinary": "^5.20.0",
     "prettier": "^3.0.3",
     "query-string": "^8.1.0",
     "react": "^18",
