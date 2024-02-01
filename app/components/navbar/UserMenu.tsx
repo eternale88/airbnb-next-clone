@@ -8,7 +8,7 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRentModal from "@/app/hooks/useRentModal";
 import { signOut } from "next-auth/react";
-import { SafeUser } from "@/app/types/SafeUser";
+import { SafeUser } from "@/app/types";
 import UseClickOutside from "@/app/hooks/useClickOutside";
 
 interface UserMenuProps {
