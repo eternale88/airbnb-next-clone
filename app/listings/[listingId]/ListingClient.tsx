@@ -1,6 +1,5 @@
 "use client";
-import { Reservation } from "@prisma/client";
-import { SafeListing, SafeUser } from "@/app/types";
+import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { categories } from "@/app/components/navbar/Categories";
 import Container from "@/app/components/Container";
@@ -20,7 +19,7 @@ const initialDateRange = {
   key: "selection",
 };
 interface ListingClientProps {
-  reservations?: Reservation[];
+  reservations?: SafeReservation[];
   listing: SafeListing & {
     user: SafeUser;
   };
@@ -38,7 +37,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
 
   const disabledDates = useMemo(() => {
     let dates: Date[] = [];
-    reservations.forEach((reservation) => {
+    reservations.forEach((reservation: any) => {
       const range = eachDayOfInterval({
         start: new Date(reservation.startDate),
         end: new Date(reservation.endDate),
@@ -88,8 +87,8 @@ const ListingClient: React.FC<ListingClientProps> = ({
     // if both, count the days
     if (dateRange.startDate && dateRange.endDate) {
       const dayCount = differenceInCalendarDays(
-        dateRange.startDate,
-        dateRange.endDate
+        dateRange.endDate,
+        dateRange.startDate
       );
 
       //calculate total price based on days

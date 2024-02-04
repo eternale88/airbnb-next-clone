@@ -1,8 +1,7 @@
 "use client";
 
 import useCountries from "@/app/hooks/useCountries";
-import { SafeListing, SafeUser } from "@/app/types";
-import { Listing, Reservation } from "@prisma/client";
+import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { format } from "date-fns";
@@ -12,7 +11,7 @@ import Button from "../Button";
 
 interface ListingCardProps {
   data: SafeListing;
-  reservation?: Reservation;
+  reservation?: SafeReservation;
   onAction?: (id: string) => void;
   disabled?: boolean;
   actionLabel?: string;
@@ -64,7 +63,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     const start = new Date(reservation.startDate);
     const end = new Date(reservation.endDate);
 
-    return `${format(start, "PP)")} - ${format(end, "PP")}`;
+    return `${format(start, "PP")} - ${format(end, "PP")}`;
   }, []);
 
   return (
@@ -81,7 +80,10 @@ const ListingCard: React.FC<ListingCardProps> = ({
             className='object-cover h-full w-full group-hover:scale-110 transition'
           />
           <div className='absolute top-3 right-3'>
-            <HeartButton listingId={data.id} currentUser={currentUser} />
+            <HeartButton
+              listingId={data.id}
+              currentUser={currentUser ? currentUser : null}
+            />
           </div>
         </div>
         <div className='font-semibold text-lg'>
@@ -91,17 +93,18 @@ const ListingCard: React.FC<ListingCardProps> = ({
           {reservationDate || data.category}
         </div>
         <div className='flex flex-row items-center gap-1'>
-          <div className='font-semibold'>$ {price}</div>
+          <div className='font-semibold'>${price}</div>
           {!reservation && <div className='font-light'>night</div>}
-          {onAction && actionLabel && (
-            <Button
-              small
-              label={actionLabel}
-              disabled={disabled}
-              onClick={handleCancel}
-            />
-          )}
         </div>
+
+        {onAction && actionLabel && (
+          <Button
+            small
+            label={actionLabel}
+            disabled={disabled}
+            onClick={handleCancel}
+          />
+        )}
       </div>
     </div>
   );
