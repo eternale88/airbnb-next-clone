@@ -4,13 +4,8 @@ import { Range } from "react-date-range";
 import qs from "query-string";
 import { useCallback, useMemo, useState } from "react";
 
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-
 import Modal from "./Modal";
 import Heading from "../Heading";
-import Input from "../inputs/Input";
-import toast from "react-hot-toast";
-import Button from "../Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import useSearchModal from "@/app/hooks/useSearchModal";
 import dynamic from "next/dynamic";
@@ -219,7 +214,6 @@ const SearchModal = () => {
       secondaryAction={step === STEPS.LOCATION ? undefined : onBack}
       onSubmit={onSubmit}
       body={bodyContent}
-      //footer={footerContent}
     />
   );
 };
